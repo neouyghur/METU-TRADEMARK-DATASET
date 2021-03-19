@@ -1,0 +1,113 @@
+
+    FOLDER1 = '/media/osman/megamind/data/similar-logo/new_queryset_all/new_queryset_allinone/'; % query data
+    FOLDER2 = '/media/osman/megamind/data/logo_data/930k_logo_crop/930k_logo_v3/'; % dataset data
+    OUTPUT_STR = 'output/DataInfo_930k_ac.mat'; % output 
+else
+%     FOLDER1 = '/media/osman/megamind/data/similar-logo/new-resize-small/';
+%     FOLDER2 = '/media/osman/megamind/data/logo_data/small/'/media/osman/megamind/previous_logo_retrieval_codes/SIFT/home/osman/workspaces/METU_trademark_dataset_evaluation/matlab;
+%     OUTPUT_STR = 'output/DataInfoSmall.mat';
+%     FOLDER1 = '/home/osman/datasets/METU_TRADEMARK_DATASET/autocrop/queries_no_text/';
+%     FOLDER2 = 'temp';
+%     OUTPUT_STR = 'output/DataInfoSmall.mat';
+    
+    FOLDER1 = '/media/osman/megamind/text_removed_METU_dataset/autocrop/queries/'; % query data
+    FOLDER2 = '/media/osman/megamind/text_removed_METU_dataset/autocrop/pool/'; % dataset data
+    OUTPUT_STR = 'output/DataInfo_930k_ac_text_remove.mat'; % output 
+    
+end
+% !--- before running delete some files---
+check = input('have you delete exist files : y/n \n', 's');
+while ~strcmp(check, 'y')
+    disp('delete or move files first')
+    check =  input('have you deleted: y/n \n', 's');
+end
+%% get image files
+% query logos
+query_folder1 = FOLDER1;
+query_pt1 = dir(strcat(query_folder1, '*.jpg'));
+nFile1 = length(query_pt1); % file number
+% We don't need this three line code
+[file_logo_list logo_file_list] = getSll(nFile1, query_pt1);
+fll = file_logo_list;
+lfl = logo_file_list;
+
+% other logos
+query_folder2 = FOLDER2;
+query_pt2 = dir(strcat(query_folder2, '*.jpg'));
+nFile2 = length(query_pt2); % file number
+nFile = nFile1 + nFile2; % total No of image file
+
+fid_ix = fopen(INDEX_FILE, 'w+');
+fid_bin_info = fopen(DES_INFO_FILE, 'w+');
+fid_bin_fea = fopen(FEA_FILE, 'w+');
+
+fxt = 0; % feature extract time;
+head = 1; tail = 1;
+i = 0;
+time = [];
+while (i < nFile)
+    shape= [];
+    index_info= [];
+    if (nFile - i - BLOCK) >= 0
+        temp_range = BLOCK;
+    else
+        temp_range = nFile - i;
+    end
+    
+    parfor j = 1 : temp_range
+        ix = i + j;
+        if(ix <= nFile1)
+            img_name = query_pt1(ix).name;
+            img_dir = strcat(query_folder1, img_name);
+        else
+            img_name = query_pt2(ix - nFile1).name;
+            img_dir = strcat(query_folder2, img_name);
+        end
+        
+        start_t = tic;/media/osman/megamind/previous_logo_retrieval_codes/SIFT/home/osman/workspaces/METU_trademark_dataset_evaluation/matlab
+        try
+            %[~, descriptor, rcso] = sift(img_dir); % not parallel
+            [~, descriptor, rcso] = lrSift(img_dir, img_name); % parallel version
+            % rcso mean row, column scale, orientation of keypints
+        catch
+            descriptor = [];
+            rcso = [];
+            warning('can''t extract feature from %s\n', img_name);
+        end
+        shape(j).name = img_name;
+        shape(j).des = descriptor;
+        shape(j).rcso = rcso;
+        temp_time(j) = toc(start_t);
+    end
+    time = [time temp_time];
+    for j = 1 : temp_range
+        %temp_hist = shape(j).des;
+        if(~isempty(shape(j).des))
+            fwrite(fid_bin_info, shape(j).rcso', 'float');
+            fwrite(fid_bin_fea, shape(j).des', 'float');
+            tail = head + size(shape(j).des, 1) - 1;
+            temp_str = sprintf('%s\t%lu\t%lu', shape(j).name, head, tail);
+            head = tail + 1;
+        else
+            temp_str = sprintf('%s\t%d\t%d', shape(j).name, -1, -1);
+        end
+        fprintf(fid_ix, '%s\n', temp_str);
+    end
+    i = i + temp_range;
+    fprintf(1, '\r%2.2f%%', 100*i/nFile);
+end
+
+%close(pbar);
+disp(sprintf('\n***extracting features have been done***\n'));
+disp(sprintf('total_time mean_time std_time \n %g(h) %f(s) %f(s)', ...
+    sum(time)/(3600), mean(time), std(time)));
+
+folder = {query_folder1, query_folder2};
+pt = {query_pt1, query_pt2};
+fileNo = {nFile1, nFile2};
+fll_lfl = {fll, lfl};
+dataInfo = struct('folder', folder, 'pt', pt, 'fileNo', fileNo, 'fll_lfl', fll_lfl);
+
+% save data
+%save(OUTPUT_STR, 'dataInfo');
+end
