@@ -45,13 +45,15 @@ The literature already has a few logo datasets: [MPEG 7 Shape Matching Dataset](
 
 ## Download Instructions
 
-For the time being, the dataset is available per request only. If you are interested in the dataset for research purposes, please contact Sinan Kalkan with your intention.
+For the time being, the dataset is available per request only. If you are a researcher at a university (or a graduate student) interested in the dataset for research purposes, please contact Sinan Kalkan with your intention.
 
 **This material is presented to ensure timely dissemination of scholarly and technical work. Copyright and all rights therein are retained by authors or by other copyright holders. All persons copying this information are expected to adhere to the terms and constraints invoked by each author's copyright. In most cases, these works may not be reposted without the explicit permission of the copyright holder.**
 
 ## Citation
 
-Please cite the following paper if you use this dataset:  
+Please cite the following papers if you use this dataset:  
+
+W. Tuerxun, S. Kalkan, "A Challenging Big Dataset for Benchmarking Trademark Retrieval", 14th IAPR Conference on Machine Vision and Applications, Tokyo, 2015. (Available as a [PDF](http://kovan.ceng.metu.edu.tr/~sinan/publications/MVA15_0154_MS.pdf) file).
 
 O. Tursun, C. Aker, S. Kalkan, "A Large-scale Dataset and Benchmark for Similar Trademark Retrieval", submitted (Available at [arXiv:1701.05766](https://arxiv.org/abs/1701.05766)).
 
