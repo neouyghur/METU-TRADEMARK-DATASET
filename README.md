@@ -53,7 +53,7 @@ For the time being, the dataset is available per request only. If you are a rese
 
 Please cite the following papers if you use this dataset:  
 
-W. Tuerxun, S. Kalkan, "A Challenging Big Dataset for Benchmarking Trademark Retrieval", 14th IAPR Conference on Machine Vision and Applications, Tokyo, 2015. (Available as a [PDF](http://kovan.ceng.metu.edu.tr/~sinan/publications/MVA15_0154_MS.pdf) file).
+W. Tuerxun, S. Kalkan, "A Challenging Big Dataset for Benchmarking Trademark Retrieval", 14th IAPR Conference on Machine Vision and Applications, Tokyo, 2015. (Available as a [PDF](http://ceng.metu.edu.tr/~skalkan/publications/MVA15_0154_MS.pdf) file).
 
 O. Tursun, C. Aker, S. Kalkan, "A Large-scale Dataset and Benchmark for Similar Trademark Retrieval", submitted (Available at [arXiv:1701.05766](https://arxiv.org/abs/1701.05766)).
 
@@ -65,7 +65,7 @@ This work is partially funded by the Ministry of Science, Turkey, under the proj
 
 ### Contacts
 
-*   [Sinan Kalkan](http://www.kovan.ceng.metu.edu.tr/~sinan/) - Email: [skalkan [at] ceng.metu.edu.tr]
+*   [Sinan Kalkan](http://www.ceng.metu.edu.tr/~skalkan/) - Email: [skalkan [at] ceng.metu.edu.tr]
 *   [Osman Tursun](https://neouyghur.github.io/)
 
 Please contact Prof. Kalkan for accesing the dataset. For technical problem, please raise issue. We welcome your contributions. Thanks.
