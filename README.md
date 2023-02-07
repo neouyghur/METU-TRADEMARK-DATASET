@@ -68,4 +68,6 @@ This work is partially funded by the Ministry of Science, Turkey, under the proj
 *   [Sinan Kalkan](http://www.ceng.metu.edu.tr/~skalkan/) - Email: [skalkan [at] ceng.metu.edu.tr]
 *   [Osman Tursun](https://neouyghur.github.io/)
 
-Please contact Prof. Kalkan for accesing the dataset. For technical problem, please raise issue. We welcome your contributions. Thanks.
+Please contact Prof. Kalkan for accesing the dataset. We are eligible to provide access only to researchers at universities. Applicants should ask their advisors to make the request via their university email addresses.
+
+For technical problem, please raise issue. We welcome your contributions. Thanks.
